@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/gestion_de_stock?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password:
+  jpa:
+    hibernate.ddl-auto: update
+    generate-ddl: true
+    show-sql: false
+    database: MYSQL
+server:
+  port: 8081
+
+flickr:
+  apiKey: 5040da411c8964c66ac5182a8ba55462
+  apiSecret: a5002211639f2e4b
+  appKey: 72157720889386399-aeb15aed83056810
+  appSecret: 386a69cdde20c581
