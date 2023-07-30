@@ -5,10 +5,13 @@ spring:
     username: root
     password:
   jpa:
-    hibernate.ddl-auto: update
-    generate-ddl: true
-    show-sql: false
     database: MYSQL
+    show-sql: false
+    properties:
+      hibernate.session_factory.statement_inspector: com.example.gestion_de_stock.interceptor.Interceptor
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.MySQL5Dialect
 server:
   port: 8081
 

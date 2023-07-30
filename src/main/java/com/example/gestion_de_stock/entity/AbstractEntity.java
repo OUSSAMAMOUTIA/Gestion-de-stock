@@ -17,17 +17,18 @@ public class AbstractEntity implements Serializable {
     @Id
     @GeneratedValue
     private Integer id;
-//    @CreatedDate
+    @CreatedDate
+    @Column(nullable = false,updatable = false)
     private Instant creationDate;
-//    @LastModifiedDate
+    @LastModifiedDate
     private Instant lastModifiedDate;
-    @PrePersist
-    void prePersist(){
-        creationDate=Instant.now();
-        lastModifiedDate=Instant.now();
-    }
-    @PreUpdate
-    void preUpdate(){
-        lastModifiedDate=Instant.now();
-    }
+//    @PrePersist
+//    void prePersist(){
+//        creationDate=Instant.now();
+//        lastModifiedDate=Instant.now();
+//    }
+//    @PreUpdate
+//    void preUpdate(){
+//        lastModifiedDate=Instant.now();
+//    }
 }
