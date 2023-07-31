@@ -35,7 +35,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 //                    Collections.singletonList("Un autre utilisateur avec le meme email existe deja dans la BDD"));
 //        }
 
-//        dto.setMoteDePasse(passwordEncoder.encode(dto.getMoteDePasse()));
+//        dto.setMoteDePasse(passwordEncoder.encode(dto.getMotDePasse()));
 
         return UtilisateurDto.fromEntity(
                 utilisateurRepository.save(
@@ -63,6 +63,16 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         return utilisateurRepository.findAll().stream()
                 .map(UtilisateurDto::fromEntity)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public UtilisateurDto findByEmail(String email) {
+        return utilisateurRepository.findUtilisateurByEmail(email)
+                .map(UtilisateurDto::fromEntity)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Aucun utilisateur avec l'email = " + email + " n' ete trouve dans la BDD",
+                        ErrorCodes.UTILISATEUR_NOT_FOUND)
+                );
     }
 
     @Override

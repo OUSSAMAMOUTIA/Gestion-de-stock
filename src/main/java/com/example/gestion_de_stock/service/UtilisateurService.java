@@ -14,7 +14,8 @@ public interface UtilisateurService {
 
     void delete(Integer id);
 
-//    UtilisateurDto findByEmail(String email);
+
+    UtilisateurDto findByEmail(String email);
 
 //    UtilisateurDto changerMotDePasse(ChangerMotDePasseUtilisateurDto dto);
 
