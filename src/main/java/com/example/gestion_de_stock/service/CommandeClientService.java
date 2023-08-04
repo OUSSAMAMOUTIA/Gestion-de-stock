@@ -1,23 +1,26 @@
 package com.example.gestion_de_stock.service;
 
 import com.example.gestion_de_stock.dto.CommandeClientDto;
+import com.example.gestion_de_stock.dto.LigneCommandeClientDto;
+import com.example.gestion_de_stock.entity.EtatCommande;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface CommandeClientService {
 
     CommandeClientDto save(CommandeClientDto dto);
 
-//    CommandeClientDto updateEtatCommande(Integer idCommande, EtatCommande etatCommande);
+    CommandeClientDto updateEtatCommande(Integer idCommande, EtatCommande etatCommande);
 
-//    CommandeClientDto updateQuantiteCommande(Integer idCommande, Integer idLigneCommande, BigDecimal quantite);
+    CommandeClientDto updateQuantiteCommande(Integer idCommande, Integer idLigneCommande, BigDecimal quantite);
 
-//    CommandeClientDto updateClient(Integer idCommande, Integer idClient);
+    CommandeClientDto updateClient(Integer idCommande, Integer idClient);
 
-//    CommandeClientDto updateArticle(Integer idCommande, Integer idLigneCommande, Integer newIdArticle);
+    CommandeClientDto updateArticle(Integer idCommande, Integer idLigneCommande, Integer newIdArticle);
 
-    // Delete article ==> delete LigneCommandeClient
-//    CommandeClientDto deleteArticle(Integer idCommande, Integer idLigneCommande);
+ //    Delete article ==> delete LigneCommandeClient
+    CommandeClientDto deleteArticle(Integer idCommande, Integer idLigneCommande);
 
     CommandeClientDto findById(Integer id);
 
@@ -25,7 +28,7 @@ public interface CommandeClientService {
 
     List<CommandeClientDto> findAll();
 
-//    List<LigneCommandeClientDto> findAllLignesCommandesClientByCommandeClientId(Integer idCommande);
+    List<LigneCommandeClientDto> findAllLignesCommandesClientByCommandeClientId(Integer idCommande);
 
     void delete(Integer id);
 

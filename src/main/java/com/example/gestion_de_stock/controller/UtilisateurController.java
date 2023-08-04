@@ -3,6 +3,7 @@ package com.example.gestion_de_stock.controller;
 import com.example.gestion_de_stock.controller.api.UtilisateurApi;
 import com.example.gestion_de_stock.dto.UtilisateurDto;
 import com.example.gestion_de_stock.service.UtilisateurService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,6 +13,8 @@ import static com.example.gestion_de_stock.utils.Constants.APP_ROOT;
 
 @RequestMapping(APP_ROOT)
 @RestController
+@SecurityRequirement(name = "Bearer Authentication")
+
 public class UtilisateurController implements UtilisateurApi {
     private final UtilisateurService utilisateurService;
 

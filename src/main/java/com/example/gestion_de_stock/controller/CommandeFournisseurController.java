@@ -4,10 +4,13 @@ import static com.example.gestion_de_stock.utils.Constants.APP_ROOT;
 
 import com.example.gestion_de_stock.controller.api.CommandeFournisseurApi;
 import com.example.gestion_de_stock.dto.CommandeFournisseurDto;
+import com.example.gestion_de_stock.dto.LigneCommandeFournisseurDto;
+import com.example.gestion_de_stock.entity.EtatCommande;
 import com.example.gestion_de_stock.service.CommandeFournisseurService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RequestMapping(APP_ROOT)
@@ -25,22 +28,52 @@ public class CommandeFournisseurController implements CommandeFournisseurApi {
     }
 
     @Override
+    public CommandeFournisseurDto updateEtatCommande(Integer idCommande, EtatCommande etatCommande) {
+        return commandeFournisseurService.updateEtatCommande(idCommande, etatCommande);
+    }
+
+    @Override
+    public CommandeFournisseurDto updateQuantiteCommande(Integer idCommande, Integer idLigneCommande, BigDecimal quantite) {
+        return commandeFournisseurService.updateQuantiteCommande(idCommande, idLigneCommande, quantite);
+    }
+
+    @Override
+    public CommandeFournisseurDto updateFournisseur(Integer idCommande, Integer idFournisseur) {
+        return commandeFournisseurService.updateFournisseur(idCommande, idFournisseur);
+    }
+
+    @Override
+    public CommandeFournisseurDto updateArticle(Integer idCommande, Integer idLigneCommande, Integer idArticle) {
+        return commandeFournisseurService.updateArticle(idCommande, idLigneCommande, idArticle);
+    }
+
+    @Override
+    public CommandeFournisseurDto deleteArticle(Integer idCommande, Integer idLigneCommande) {
+        return commandeFournisseurService.deleteArticle(idCommande, idLigneCommande);
+    }
+
+    @Override
+    public List<LigneCommandeFournisseurDto> findAllLignesCommandesFournisseurByCommandeFournisseurId(Integer idCommande) {
+        return commandeFournisseurService.findAllLignesCommandesFournisseurByCommandeFournisseurId(idCommande);
+    }
+
+    @Override
     public CommandeFournisseurDto findById(Integer id) {
-        return null;
+        return commandeFournisseurService.findById(id);
     }
 
     @Override
     public CommandeFournisseurDto findByCode(String code) {
-        return null;
+        return commandeFournisseurService.findByCode(code);
     }
 
     @Override
     public List<CommandeFournisseurDto> findAll() {
-        return null;
+        return commandeFournisseurService.findAll();
     }
 
     @Override
     public void delete(Integer id) {
-
+        commandeFournisseurService.delete(id);
     }
 }

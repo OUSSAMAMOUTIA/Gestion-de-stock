@@ -1,6 +1,7 @@
 package com.example.gestion_de_stock.dto;
 
 import com.example.gestion_de_stock.entity.MvtStk;
+import com.example.gestion_de_stock.entity.SourceMvtStk;
 import com.example.gestion_de_stock.entity.TypeMvtStk;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +17,7 @@ public class MvtStkDto {
     private Instant dateMvt;
     private BigDecimal quantite;
     private TypeMvtStk typeMvt;
+    private SourceMvtStk sourceMvt;
     private Integer idEntreprise;
 
     public static MvtStkDto fromEntity(MvtStk mvtStk) {
@@ -29,6 +31,7 @@ public class MvtStkDto {
                 .quantite(mvtStk.getQuantite())
                 .article(ArticleDto.fromEntity(mvtStk.getArticle()))
                 .typeMvt(mvtStk.getTypeMvt())
+                .sourceMvt(mvtStk.getSourceMvt())
                 .idEntreprise(mvtStk.getIdEntreprise())
                 .build();
     }
@@ -44,6 +47,7 @@ public class MvtStkDto {
         mvtStk.setQuantite(mvtStkDto.getQuantite());
         mvtStk.setArticle(ArticleDto.toEntity(mvtStkDto.getArticle()));
         mvtStk.setTypeMvt(mvtStkDto.getTypeMvt());
+        mvtStk.setSourceMvt(mvtStkDto.getSourceMvt());
         mvtStk.setIdEntreprise(mvtStk.getIdEntreprise());
         return mvtStk;
     }

@@ -1,6 +1,9 @@
 package com.example.gestion_de_stock.controller.api;
 
 import com.example.gestion_de_stock.dto.ArticleDto;
+import com.example.gestion_de_stock.dto.LigneCommandeClientDto;
+import com.example.gestion_de_stock.dto.LigneCommandeFournisseurDto;
+import com.example.gestion_de_stock.dto.LigneVenteDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -49,30 +52,30 @@ public interface ArticleApi {
     ArticleDto findByCodeArticle(@PathVariable("codeArticle") String codeArticle);
 
     @GetMapping(value = "/articles/all")
-//    @Operation(summary = "Renvoi la liste des articles", description = "Cette methode permet de chercher et renvoyer la liste des articles qui existent "
-//            + "dans la BDD")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "La liste des article / Une liste vide")
-//    })
+    @Operation(summary = "Renvoi la liste des articles", description = "Cette methode permet de chercher et renvoyer la liste des articles qui existent "
+            + "dans la BDD")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "La liste des article / Une liste vide")
+    })
     List<ArticleDto> findAll();
 
-//    @GetMapping( "/articles/historique/vente/{idArticle}")
-//    List<LigneVenteDto> findHistoriqueVentes(@PathVariable("idArticle") Integer idArticle);
-//
-//    @GetMapping( "/articles/historique/commandeclient/{idArticle}")
-//    List<LigneCommandeClientDto> findHistoriaueCommandeClient(@PathVariable("idArticle") Integer idArticle);
-//
-//    @GetMapping( "/articles/historique/commandefournisseur/{idArticle}")
-//    List<LigneCommandeFournisseurDto> findHistoriqueCommandeFournisseur(@PathVariable("idArticle") Integer idArticle);
-//
-//    @GetMapping( "/articles/filter/category/{idCategory}")
-//    List<ArticleDto> findAllArticleByIdCategory(@PathVariable("idCategory") Integer idCategory);
+    @GetMapping("/articles/historique/vente/{idarticle}")
+    List<LigneVenteDto> findHistoriqueVentes(@PathVariable("idarticle") Integer idArticle);
 
-    @DeleteMapping("/articles/delete/{idArticle}")
+    @GetMapping("/articles/historique/commandeclient/{idarticle}")
+    List<LigneCommandeClientDto> findHistoriaueCommandeClient(@PathVariable("idarticle") Integer idArticle);
+
+    @GetMapping("/articles/historique/commandefournisseur/{idarticle}")
+    List<LigneCommandeFournisseurDto> findHistoriqueCommandeFournisseur(@PathVariable("idarticle") Integer idArticle);
+
+    @GetMapping("/articles/filter/category/{idcategory}")
+    List<ArticleDto> findAllArticleByIdCategory(@PathVariable("idcategory") Integer idCategory);
+
+    @DeleteMapping("/articles/delete/{idarticle}")
     @Operation(summary = "Supprimer un article", description = "Cette methode permet de supprimer un article par ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "L'article a ete supprime")
     })
-    void delete(@PathVariable("idArticle") Integer id);
+    void delete(@PathVariable("idarticle") Integer id);
 
 }

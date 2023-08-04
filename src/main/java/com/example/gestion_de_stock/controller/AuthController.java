@@ -8,6 +8,7 @@ import com.example.gestion_de_stock.dto.auth.AuthResponseDTO;
 import com.example.gestion_de_stock.service.auth.JWTGenerator;
 import com.example.gestion_de_stock.dto.auth.LoginDto;
 import com.example.gestion_de_stock.dto.auth.RegisterDto;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,8 @@ import java.util.Collections;
 
 @RestController
 @RequestMapping("/api/auth")
+@SecurityRequirement(name = "Bearer Authentication")
+
 public class AuthController {
 
     private final AuthenticationProvider authenticationManager;

@@ -1,15 +1,21 @@
 package com.example.gestion_de_stock.service.impl;
 
 import com.example.gestion_de_stock.dto.EntrepriseDto;
+import com.example.gestion_de_stock.dto.RolesDto;
+import com.example.gestion_de_stock.dto.UtilisateurDto;
 import com.example.gestion_de_stock.exception.EntityNotFoundException;
 import com.example.gestion_de_stock.exception.ErrorCodes;
 import com.example.gestion_de_stock.exception.InvalidEntityException;
 import com.example.gestion_de_stock.repository.EntrepriseRepository;
+import com.example.gestion_de_stock.repository.RolesRepository;
+import com.example.gestion_de_stock.repository.UtilisateurRepository;
 import com.example.gestion_de_stock.service.EntrepriseService;
+import com.example.gestion_de_stock.service.UtilisateurService;
 import com.example.gestion_de_stock.validator.EntrepriseValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,9 +23,13 @@ import java.util.stream.Collectors;
 @Slf4j
 public class EntrepriseServiceImpl implements EntrepriseService {
     private final EntrepriseRepository entrepriseRepository;
+    private final RolesRepository rolesRepository;
+    private final UtilisateurService utilisateurService;
 
-    public EntrepriseServiceImpl(EntrepriseRepository entrepriseRepository) {
+    public EntrepriseServiceImpl(EntrepriseRepository entrepriseRepository, RolesRepository rolesRepository, UtilisateurService utilisateurService) {
         this.entrepriseRepository = entrepriseRepository;
+        this.rolesRepository = rolesRepository;
+        this.utilisateurService = utilisateurService;
     }
 
     @Override
@@ -32,9 +42,35 @@ public class EntrepriseServiceImpl implements EntrepriseService {
         EntrepriseDto savedEntreprise = EntrepriseDto.fromEntity(
                 entrepriseRepository.save(EntrepriseDto.toEntity(dto))
         );
-        return savedEntreprise;
-    }
 
+        UtilisateurDto utilisateur = fromEntreprise(savedEntreprise);
+
+        UtilisateurDto savedUser = utilisateurService.save(utilisateur);
+
+        RolesDto rolesDto = RolesDto.builder()
+                .roleName("ADMIN")
+                .utilisateur(savedUser)
+                .build();
+
+        rolesRepository.save(RolesDto.toEntity(rolesDto));
+
+        return  savedEntreprise;
+    }
+    private UtilisateurDto fromEntreprise(EntrepriseDto dto) {
+        return UtilisateurDto.builder()
+                .adresse(dto.getAdresse())
+                .nom(dto.getNom())
+                .prenom(dto.getCodeFiscal())
+                .email(dto.getEmail())
+                .motDePasse(generateRandomPassword())
+                .entreprise(dto)
+                .dateDeNaissance(Instant.now())
+                .photo(dto.getPhoto())
+                .build();
+    }
+    private String generateRandomPassword() {
+        return "som3R@nd0mP@$$word";
+    }
     @Override
     public EntrepriseDto findById(Integer id) {
         if (id == null) {

@@ -1,10 +1,13 @@
 package com.example.gestion_de_stock.service.impl;
 
 import com.example.gestion_de_stock.dto.ClientDto;
+import com.example.gestion_de_stock.entity.CommandeClient;
 import com.example.gestion_de_stock.exception.EntityNotFoundException;
 import com.example.gestion_de_stock.exception.ErrorCodes;
 import com.example.gestion_de_stock.exception.InvalidEntityException;
+import com.example.gestion_de_stock.exception.InvalidOperationException;
 import com.example.gestion_de_stock.repository.ClientRepository;
+import com.example.gestion_de_stock.repository.CommandeClientRepository;
 import com.example.gestion_de_stock.service.ClientService;
 import com.example.gestion_de_stock.validator.ClientValidator;
 import lombok.extern.slf4j.Slf4j;
@@ -17,9 +20,11 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ClientServiceImpl implements ClientService {
     private final ClientRepository clientRepository;
+    private final CommandeClientRepository commandeClientRepository;
 
-    public ClientServiceImpl(ClientRepository clientRepository) {
+    public ClientServiceImpl(ClientRepository clientRepository, CommandeClientRepository commandeClientRepository) {
         this.clientRepository = clientRepository;
+        this.commandeClientRepository = commandeClientRepository;
     }
 
     @Override
@@ -64,7 +69,11 @@ public class ClientServiceImpl implements ClientService {
             log.error("Client ID is null");
             return;
         }
-
+        List<CommandeClient> commandeClients = commandeClientRepository.findAllByClientId(id);
+        if (!commandeClients.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer un client qui a deja des commande clients",
+                    ErrorCodes.CLIENT_ALREADY_IN_USE);
+        }
         clientRepository.deleteById(id);
     }
 }

@@ -2,6 +2,9 @@ package com.example.gestion_de_stock.controller;
 
 import com.example.gestion_de_stock.controller.api.ArticleApi;
 import com.example.gestion_de_stock.dto.ArticleDto;
+import com.example.gestion_de_stock.dto.LigneCommandeClientDto;
+import com.example.gestion_de_stock.dto.LigneCommandeFournisseurDto;
+import com.example.gestion_de_stock.dto.LigneVenteDto;
 import com.example.gestion_de_stock.service.ArticleService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,5 +40,21 @@ public class ArticleController implements ArticleApi {
 
     public void delete(Integer id) {
         articleService.delete(id);
+    }
+
+    public List<LigneVenteDto> findHistoriqueVentes(Integer idArticle) {
+        return articleService.findHistoriqueVentes(idArticle);
+    }
+
+    public List<LigneCommandeClientDto> findHistoriaueCommandeClient(Integer idArticle) {
+        return articleService.findHistoriaueCommandeClient(idArticle);
+    }
+
+    public List<LigneCommandeFournisseurDto> findHistoriqueCommandeFournisseur(Integer idArticle) {
+        return articleService.findHistoriqueCommandeFournisseur(idArticle);
+    }
+
+    public List<ArticleDto> findAllArticleByIdCategory(Integer idCategory) {
+        return articleService.findAllArticleByIdCategory(idCategory);
     }
 }

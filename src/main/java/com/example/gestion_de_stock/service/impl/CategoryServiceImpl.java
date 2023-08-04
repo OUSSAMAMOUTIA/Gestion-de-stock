@@ -1,9 +1,12 @@
 package com.example.gestion_de_stock.service.impl;
 
 import com.example.gestion_de_stock.dto.CategoryDto;
+import com.example.gestion_de_stock.entity.Article;
 import com.example.gestion_de_stock.exception.EntityNotFoundException;
 import com.example.gestion_de_stock.exception.ErrorCodes;
 import com.example.gestion_de_stock.exception.InvalidEntityException;
+import com.example.gestion_de_stock.exception.InvalidOperationException;
+import com.example.gestion_de_stock.repository.ArticleRepository;
 import com.example.gestion_de_stock.repository.CategoryRepository;
 import com.example.gestion_de_stock.service.CategoryService;
 import com.example.gestion_de_stock.validator.CategoryValidator;
@@ -18,10 +21,13 @@ import java.util.stream.Collectors;
 @Slf4j
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
+    private final ArticleRepository articleRepository;
 
-    public CategoryServiceImpl(CategoryRepository categoryRepository) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository, ArticleRepository articleRepository) {
         this.categoryRepository = categoryRepository;
+        this.articleRepository = articleRepository;
     }
+
     @Override
     public CategoryDto save(CategoryDto dto) {
         List<String> errors = CategoryValidator.validate(dto);
@@ -75,11 +81,11 @@ public class CategoryServiceImpl implements CategoryService {
             log.error("Category ID is null");
             return;
         }
-//        List<Article> articles = articleRepository.findAllByCategoryId(id);
-//        if (!articles.isEmpty()) {
-//            throw new InvalidOperationException("Impossible de supprimer cette categorie qui est deja utilise",
-//                    ErrorCodes.CATEGORY_ALREADY_IN_USE);
-//        }
+        List<Article> articles = articleRepository.findAllByCategoryId(id);
+        if (!articles.isEmpty()) {
+            throw new InvalidOperationException("Impossible de supprimer cette categorie qui est deja utilise",
+                    ErrorCodes.CATEGORY_ALREADY_IN_USE);
+        }
         categoryRepository.deleteById(id);
     }
 }

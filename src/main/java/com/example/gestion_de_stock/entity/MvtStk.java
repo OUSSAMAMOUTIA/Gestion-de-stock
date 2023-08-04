@@ -1,8 +1,6 @@
 package com.example.gestion_de_stock.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,6 +19,9 @@ public class MvtStk extends AbstractEntity {
     private Article article;
     private Instant dateMvt;
     private BigDecimal quantite;
+    @Enumerated(EnumType.STRING)
     private TypeMvtStk typeMvt;
     private Integer idEntreprise;
+    @Enumerated(EnumType.STRING)
+    private SourceMvtStk sourceMvt;
 }

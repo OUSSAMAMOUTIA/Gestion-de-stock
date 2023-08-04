@@ -1,9 +1,6 @@
 package com.example.gestion_de_stock.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,6 +17,8 @@ public class CommandeFournisseur extends AbstractEntity{
     private String code;
     private Instant dateCommande;
     private Integer idEntreprise;
+    @Enumerated(EnumType.STRING)
+    private EtatCommande etatCommande;
     @ManyToOne
     @JoinColumn(name = "idfournisseur")
     private Fournisseur fournisseur;
